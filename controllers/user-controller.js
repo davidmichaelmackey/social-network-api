@@ -10,5 +10,21 @@ module.exports = {
       });
   },
 
+  getSingleUser(req, res) {
+    const { userId } = req.params;
+    User.findOne({ _id: userId })
+      .populate('thoughts')
+      .populate('friends')
+      .then((user) => {
+        !user
+          ? res.status(400).json({ message: 'No user found with this ID!' })
+          : res.status(200).json(user);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+
 
 };
