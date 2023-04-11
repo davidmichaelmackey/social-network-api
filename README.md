@@ -12,6 +12,7 @@
 
 ## Table of Contents
 
+- [Links](#links)
 - [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
@@ -20,6 +21,12 @@
 - [Contribute](#contribute)
 - [Tests](#tests)
 - [Questions](#questions)
+
+## Links
+
+[Loom Walkthrough](https://www.loom.com/share/959e78e18ab242c9bfe84c9f5f2ffe23)
+
+[GitHub Repository](https://github.com/davidmichaelmackey/social-network-api)
 
 ## Description
 This project is an API for a social network web application where users can share their thoughts, react to friends’ thoughts, and create a friend list.
