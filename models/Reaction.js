@@ -1,26 +1,21 @@
-// const mongoose = require('mongoose');
 const { Schema, default: mongoose } = require('mongoose');
 
 const reactionsSchema = new Schema(
   {
-    reactionId:
-    {
+    reactionId: {
       type: mongoose.Types.ObjectId,
       default: () => new mongoose.Types.ObjectId()
     },
-    reactionBody:
-    {
+    reactionBody: {
       type: String,
       required: true,
       maxLength: [ 280, 'Must be less than 280 characters!' ]
     },
-    username:
-    {
+    username: {
       type: String,
       required: true
     },
-    createdAt:
-    {
+    createdAt: {
       type: Date,
       default: Date.now,
       get: function(timestamp) {
@@ -29,8 +24,7 @@ const reactionsSchema = new Schema(
     }
   },
   {
-    toJSON:
-    {
+    toJSON: {
       getters: true,
     },
     id: false,
