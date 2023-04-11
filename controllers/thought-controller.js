@@ -8,21 +8,21 @@ module.exports = {
         console.log(err);
         res.status(500).json({ message: 'Server Error!' });
       });
-  }
+  },
 
-  // getSingleThought(req, res) {
-  //   const { thoughtId } = req.params;
-  //   Thought.findOne({ _id: thoughtId })
-  //     .then((thought) => {
-  //       !thought
-  //         ? res.status(400).json({ message: 'No user found with this id!' })
-  //         : res.status(200).json(thought);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       res.status(500).json({ message: 'Server Error!' });
-  //     });
-  // }
+  getSingleThought(req, res) {
+    const { thoughtId } = req.params;
+    Thought.findOne({ _id: thoughtId })
+      .then((thought) => {
+        !thought
+          ? res.status(400).json({ message: 'No user found with this id!' })
+          : res.status(200).json(thought);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server Error!' });
+      });
+  }
 
   // createThought(req, res) {
   //   const { thoughtText, username, userId } = req.body;
