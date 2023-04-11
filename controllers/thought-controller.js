@@ -6,7 +6,7 @@ module.exports = {
       .then((thoughts) => res.json(thoughts))
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ message: 'Server Error!' });
+        res.status(500).json({ message: 'Server Error! :/' });
       });
   },
 
@@ -20,7 +20,7 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ message: 'Server Error!' });
+        res.status(500).json({ message: 'Server Error! :/' });
       });
   },
 
@@ -46,7 +46,7 @@ module.exports = {
       })
       .catch((er) => {
         console.log(err);
-        res.status(500).json({ message: 'Server Error!' });
+        res.status(500).json({ message: 'Server Error! :/' });
       });
   },
 
@@ -68,7 +68,35 @@ module.exports = {
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ message: 'Server Error!' });
+        res.status(500).json({ message: 'Server Error! :/' });
+      });
+  },
+
+  deleteThought(req, res) {
+    const { thoughtId } = req.params;
+    Thought.findById(thoughtId)
+      .then((thought) => {
+        if (!thought) {
+          res.status(400).json({ message: 'No thought found with this ID!' });
+        }
+        return Thought.findByIdAndDelete(thoughtId);
+      })
+      .then((thought) => {
+        const username = thought.username;
+        return User.findOneAndUpdate(
+          { username: username },
+          { $pull: { thoughts: thoughtId } },
+          { new: true }
+        )
+          .then((user) => {
+            !user
+              ? res.status(400).json({ message: 'No user found with this ID!' })
+              : res.json({ message: 'Thought and associated user data have been deleted.' });
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server Error! :/' });
       });
   },
 
