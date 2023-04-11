@@ -49,12 +49,12 @@ module.exports = {
       .populate('friends')
       .then((user) => {
         !user
-          ? res.status(400).json({ message: 'Found no user with this ID' })
+          ? res.status(400).json({ message: 'No user found with this ID!' })
           : res.json(user);
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error! :/' });
       });
   },
 
@@ -63,7 +63,7 @@ module.exports = {
     User.findById(userId)
       .then((user) => {
         if (!user) {
-          res.status(400).json({ message: 'Found no user with this ID' });
+          res.status(400).json({ message: 'No user found with this ID!' });
         }
 
         return User.findByIdAndDelete(userId);
@@ -71,11 +71,11 @@ module.exports = {
       .then((user) => {
         const username = user.username;
         Thought.deleteMany({ username });
-        res.json({ message: `User ${username} and their associated thoughts were deleted successfully` });
+        res.json({ message: `User ${username} and their associated thoughts were deleted successfully.` });
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error! :/' });
       });
   },
 
@@ -90,12 +90,12 @@ module.exports = {
       .populate('friends')
       .then((user) => {
         !user
-          ? res.status(400).json({ message: 'Found no user with this ID' })
+          ? res.status(400).json({ message: 'No user found with this ID!' })
           : res.json(user);
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error! :/' });
       });
   },
 
@@ -109,12 +109,12 @@ module.exports = {
       .populate('friends')
       .then((user) => {
         !user
-          ? res.status(400).json({ message: 'Found no user with this ID' })
-          : res.json({ message: 'Friend removed from list' });
+          ? res.status(400).json({ message: 'No user found with this ID!' })
+          : res.json({ message: 'Friend has been removed from list.' });
       })
       .catch((err) => {
         console.log(err);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error! :/' });
       });
   }
 };
