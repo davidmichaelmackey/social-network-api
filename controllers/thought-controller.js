@@ -29,7 +29,28 @@ module.exports = {
     if (!userId) {
       res.status(400).json({ message: 'No user found with this id!' });
     }
-  }
+
+    Thought.create({ thoughtText, username })
+      .then((thought) => {
+        const thoughtId = thought._id;
+
+        return User.findByIdAndUpdate(
+          userId,
+          { $push: { thoughts: thoughtId } },
+          { new: true });
+      })
+      .then((user) => {
+        !user
+          ? res.status(400).json({ message: 'No user found with this id!' })
+          : res.status(200).json(user);
+      })
+      .catch((er) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server Error!' });
+      });
+  },
+
+
 };
 
 
