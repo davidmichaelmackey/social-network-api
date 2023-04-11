@@ -99,5 +99,22 @@ module.exports = {
       });
   },
 
-
+  removeFriend(req, res) {
+    const { userId } = req.params;
+    const { friendId } = req.params;
+    User.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { friends: friendId } },
+      { new: true })
+      .populate('friends')
+      .then((user) => {
+        !user
+          ? res.status(400).json({ message: 'Found no user with this ID' })
+          : res.json({ message: 'Friend removed from list' });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server error' });
+      });
+  }
 };
