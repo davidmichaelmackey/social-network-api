@@ -26,5 +26,15 @@ module.exports = {
       });
   },
 
+  createUser(req, res) {
+    console.log(req.body);
+    User.create(req.body)
+      .then((user) => res.json(user))
+      .catch((er) => {
+        console.log(err);
+        res.status(500).json(err);
+      });
+  },
+
 
 };
