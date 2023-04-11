@@ -57,4 +57,27 @@ module.exports = {
         res.status(500).json({ message: 'Server error' });
       });
   },
+
+  deleteUser(req, res) {
+    const { userId } = req.params;
+    User.findById(userId)
+      .then((user) => {
+        if (!user) {
+          res.status(400).json({ message: 'Found no user with this ID' });
+        }
+
+        return User.findByIdAndDelete(userId);
+      })
+      .then((user) => {
+        const username = user.username;
+        Thought.deleteMany({ username });
+        res.json({ message: `User ${username} and their associated thoughts were deleted successfully` });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server error' });
+      });
+  },
+
+
 };
