@@ -79,5 +79,25 @@ module.exports = {
       });
   },
 
+  addFriend(req, res) {
+    const { userId } = req.params;
+    const { friendId } = req.params;
+
+    User.findOneAndUpdate(
+      { _id: userId },
+      { $addToSet: { friends: friendId } },
+      { new: true })
+      .populate('friends')
+      .then((user) => {
+        !user
+          ? res.status(400).json({ message: 'Found no user with this ID' })
+          : res.json(user);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server error' });
+      });
+  },
+
 
 };
