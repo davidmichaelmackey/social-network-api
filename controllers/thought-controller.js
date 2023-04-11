@@ -15,7 +15,7 @@ module.exports = {
     Thought.findOne({ _id: thoughtId })
       .then((thought) => {
         !thought
-          ? res.status(400).json({ message: 'No user found with this id!' })
+          ? res.status(400).json({ message: 'No user found with this ID!' })
           : res.status(200).json(thought);
       })
       .catch((err) => {
@@ -27,7 +27,7 @@ module.exports = {
   createThought(req, res) {
     const { thoughtText, username, userId } = req.body;
     if (!userId) {
-      res.status(400).json({ message: 'No user found with this id!' });
+      res.status(400).json({ message: 'No user found with this ID!' });
     }
 
     Thought.create({ thoughtText, username })
@@ -41,7 +41,7 @@ module.exports = {
       })
       .then((user) => {
         !user
-          ? res.status(400).json({ message: 'No user found with this id!' })
+          ? res.status(400).json({ message: 'No user found with this ID!' })
           : res.status(200).json(user);
       })
       .catch((er) => {
@@ -63,7 +63,7 @@ module.exports = {
     )
       .then((thought) => {
         !thought
-          ? res.status(400).json({ message: 'No thought found with this id!' })
+          ? res.status(400).json({ message: 'No thought found with this ID!' })
           : res.status(201).json(thought);
       })
       .catch((err) => {
@@ -100,7 +100,29 @@ module.exports = {
       });
   },
 
+  createReaction(req, res) {
+    const { thoughtId } = req.params;
+    const { username, reactionBody } = req.body;
+    Thought.findByIdAndUpdate(
+      thoughtId,
+      { $push: { reactions: { username, reactionBody } } },
+      {
+        new: true,
+        runValidators: true
+      }
+    )
+      .then((thought) => {
+        if (!thought) {
+          res.status(400).json({ message: 'No thought found with this ID!' });
+        }
 
+        res.status(201).json({ thought });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server Error! :/' });
+      });
+  },
 };
 
 
