@@ -50,6 +50,28 @@ module.exports = {
       });
   },
 
+  updateThought(req, res) {
+    const { thoughtText } = req.body;
+    const { thoughtId } = req.params;
+    Thought.findByIdAndUpdate(
+      thoughtId,
+      { thoughtText },
+      {
+        new: true,
+        runValidators: true
+      }
+    )
+      .then((thought) => {
+        !thought
+          ? res.status(400).json({ message: 'No thought found with this id!' })
+          : res.status(201).json(thought);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({ message: 'Server Error!' });
+      });
+  },
+
 
 };
 
