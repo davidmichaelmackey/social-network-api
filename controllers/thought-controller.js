@@ -22,14 +22,14 @@ module.exports = {
         console.log(err);
         res.status(500).json({ message: 'Server Error!' });
       });
-  }
+  },
 
-  // createThought(req, res) {
-  //   const { thoughtText, username, userId } = req.body;
-  //   if (!userId) {
-  //     res.status(400).json({ message: 'No user found with this id!' });
-  //   }
-  // }
+  createThought(req, res) {
+    const { thoughtText, username, userId } = req.body;
+    if (!userId) {
+      res.status(400).json({ message: 'No user found with this id!' });
+    }
+  }
 };
 
 
